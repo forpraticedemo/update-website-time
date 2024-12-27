@@ -2,8 +2,11 @@ name: Update Time
 
 on:
   schedule:
-    - cron: '0 * * * *' # 每小時執行一次
-  workflow_dispatch: # 手動執行
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   update-time:
@@ -17,11 +20,9 @@ jobs:
           echo "{\"updatedTime\": \"$(date -u)\"}" > time.json
 
       - name: Commit and push changes
-        env:
-          PAT_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           git config --local user.name "GitHub Actions Bot"
           git config --local user.email "actions@github.com"
           git add time.json
           git commit -m "Update time: $(date -u)"
-          git push https://x-access-token:${PAT_TOKEN}@github.com/${{ github.repository }}.git
+          git push
