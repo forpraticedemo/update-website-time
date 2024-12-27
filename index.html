@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Updated Time</title>
+</head>
+<body>
+    <h1>Webpage Last Updated:</h1>
+    <p id="update-time">Loading...</p>
+</body>
+<script>
+    fetch('./time.json')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('update-time').textContent = data.updatedTime;
+        })
+        .catch(error => console.error('Error loading time:', error));
+</script>
+</html>
